@@ -25,6 +25,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'pg', '~> 0.18.4'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
+gem 'faker'
 
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
@@ -39,7 +40,6 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem 'rubocop', require: false
-  gem 'faker'
   gem 'rspec-rails', '~> 3.5'
 end
 
