@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20220118040714) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "admins", force: :cascade do |t|
     t.string   "first_name"
     t.string   "last_name"
@@ -30,7 +33,7 @@ ActiveRecord::Schema.define(version: 20220118040714) do
     t.integer  "stage_id"
   end
 
-  add_index "health_regions", ["stage_id"], name: "index_health_regions_on_stage_id"
+  add_index "health_regions", ["stage_id"], name: "index_health_regions_on_stage_id", using: :btree
 
   create_table "stages", force: :cascade do |t|
     t.integer  "max_indoor_gathering"
@@ -46,4 +49,5 @@ ActiveRecord::Schema.define(version: 20220118040714) do
     t.datetime "updated_at",            null: false
   end
 
+  add_foreign_key "health_regions", "stages"
 end

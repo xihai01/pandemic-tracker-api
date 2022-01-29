@@ -31064,3 +31064,304 @@ Completed 200 OK in 13ms (Views: 10.1ms | ActiveRecord: 1.9ms)
   [1m[35m (0.1ms)[0m  BEGIN
   [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "health_regions" ("region_name", "region_code", "stage_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["region_name", "Algoma Public Health Unit"], ["region_code", "2226"], ["stage_id", 3], ["created_at", "2022-01-29 17:28:54.384155"], ["updated_at", "2022-01-29 17:28:54.384155"]]
   [1m[35m (0.9ms)[0m  COMMIT
+  [1m[36mActiveRecord::SchemaMigration Load (2.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.3ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+Migrating to CreateStages (20220118040714)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (11.5ms)[0m  DROP TABLE "stages"
+  [1m[36mSQL (0.3ms)[0m  [1mDELETE FROM "schema_migrations" WHERE "schema_migrations"."version" = $1[0m  [["version", "20220118040714"]]
+  [1m[35m (1.3ms)[0m  COMMIT
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (2.8ms)[0m  SELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'admins'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+
+  [1m[36m (2.6ms)[0m  [1mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'health_regions'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.3ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+Migrating to AddStageIdToHealthRegions (20220118040235)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (3.8ms)[0m  SELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'health_regions'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateStages (20220118040714)
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to AddStageIdToHealthRegions (20220118040714)
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36m (1.6ms)[0m  [1mALTER TABLE "health_regions" ADD "stage_id" integer[0m
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36m (121.7ms)[0m  [1mDROP DATABASE IF EXISTS "pandemic_development"[0m
+  [1m[35m (266.2ms)[0m  DROP DATABASE IF EXISTS "pandemic_test"
+  [1m[36m (487.4ms)[0m  [1mCREATE DATABASE "pandemic_development" ENCODING = 'unicode'[0m
+  [1m[35m (486.8ms)[0m  CREATE DATABASE "pandemic_test" ENCODING = 'unicode'
+  [1m[36m (4.9ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL) [0m
+  [1m[35m (2.3ms)[0m  CREATE UNIQUE INDEX  "unique_schema_migrations" ON "schema_migrations"  ("version")
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateAdmins (20220115210212)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (5.4ms)[0m  [1mCREATE TABLE "admins" ("id" serial primary key, "first_name" character varying, "last_name" character varying, "email" character varying, "password_digest" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) [0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ($1)  [["version", "20220115210212"]]
+  [1m[36m (0.8ms)[0m  [1mCOMMIT[0m
+Migrating to CreateStages (20220115211551)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (3.6ms)[0m  [1mCREATE TABLE "stages" ("id" serial primary key, "max_indoor_gathering" integer, "max_outdoor_gathering" integer, "retail" character varying, "ceremony" character varying, "food_establishments" character varying, "sports_recreational" character varying, "entertainment" character varying, "personal_care" character varying, "color_code" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) [0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ($1)  [["version", "20220115211551"]]
+  [1m[36m (0.8ms)[0m  [1mCOMMIT[0m
+Migrating to CreateHealthRegions (20220118040235)
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36m (4.4ms)[0m  [1mCREATE TABLE "health_regions" ("id" serial primary key, "region_name" character varying, "region_code" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) [0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ($1)  [["version", "20220118040235"]]
+  [1m[36m (0.9ms)[0m  [1mCOMMIT[0m
+Migrating to AddStageIdToHealthRegions (20220118040714)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "health_regions" ADD "stage_id" integer[0m
+  [1m[35m (1.7ms)[0m  CREATE  INDEX  "index_health_regions_on_stage_id" ON "health_regions"  ("stage_id")
+  [1m[36m (2.2ms)[0m  [1mALTER TABLE "health_regions" ADD CONSTRAINT "fk_rails_9f8da3d41a"
+FOREIGN KEY ("stage_id")
+  REFERENCES "stages" ("id")
+[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ($1)  [["version", "20220118040714"]]
+  [1m[36m (0.7ms)[0m  [1mCOMMIT[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.3ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (2.5ms)[0m  [1mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'admins'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[35m (2.1ms)[0m  SELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'health_regions'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+
+  [1m[36m (2.6ms)[0m  [1mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'stages'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[36m (116.3ms)[0m  [1mDROP DATABASE IF EXISTS "pandemic_development"[0m
+  [1m[35m (107.6ms)[0m  DROP DATABASE IF EXISTS "pandemic_test"
+  [1m[36m (274.5ms)[0m  [1mCREATE DATABASE "pandemic_development" ENCODING = 'unicode'[0m
+  [1m[35m (272.5ms)[0m  CREATE DATABASE "pandemic_test" ENCODING = 'unicode'
+  [1m[36mSQL (0.4ms)[0m  [1mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (9.1ms)[0m  CREATE TABLE "admins" ("id" serial primary key, "first_name" character varying, "last_name" character varying, "email" character varying, "password_digest" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) 
+  [1m[36m (5.5ms)[0m  [1mCREATE TABLE "health_regions" ("id" serial primary key, "region_name" character varying, "region_code" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, "stage_id" integer) [0m
+  [1m[35m (2.4ms)[0m  CREATE  INDEX  "index_health_regions_on_stage_id" ON "health_regions" USING btree ("stage_id")
+  [1m[36m (4.8ms)[0m  [1mCREATE TABLE "stages" ("id" serial primary key, "max_indoor_gathering" integer, "max_outdoor_gathering" integer, "retail" character varying, "ceremony" character varying, "food_establishments" character varying, "sports_recreational" character varying, "entertainment" character varying, "personal_care" character varying, "color_code" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) [0m
+  [1m[35m (2.3ms)[0m  ALTER TABLE "health_regions" ADD CONSTRAINT "fk_rails_9f8da3d41a"
+FOREIGN KEY ("stage_id")
+  REFERENCES "stages" ("id")
+
+  [1m[36m (3.7ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL) [0m
+  [1m[35m (2.2ms)[0m  CREATE UNIQUE INDEX  "unique_schema_migrations" ON "schema_migrations"  ("version")
+  [1m[36m (0.4ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (0.7ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20220118040714')
+  [1m[36m (0.7ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20220115211551')[0m
+  [1m[35m (0.6ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20220118040235')
+  [1m[36m (0.8ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20220115210212')[0m
+  [1m[35mSQL (0.3ms)[0m  CREATE EXTENSION IF NOT EXISTS "plpgsql"
+  [1m[36m (8.8ms)[0m  [1mCREATE TABLE "admins" ("id" serial primary key, "first_name" character varying, "last_name" character varying, "email" character varying, "password_digest" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) [0m
+  [1m[35m (7.9ms)[0m  CREATE TABLE "health_regions" ("id" serial primary key, "region_name" character varying, "region_code" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, "stage_id" integer) 
+  [1m[36m (2.4ms)[0m  [1mCREATE  INDEX  "index_health_regions_on_stage_id" ON "health_regions" USING btree ("stage_id")[0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "stages" ("id" serial primary key, "max_indoor_gathering" integer, "max_outdoor_gathering" integer, "retail" character varying, "ceremony" character varying, "food_establishments" character varying, "sports_recreational" character varying, "entertainment" character varying, "personal_care" character varying, "color_code" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) 
+  [1m[36m (1.9ms)[0m  [1mALTER TABLE "health_regions" ADD CONSTRAINT "fk_rails_9f8da3d41a"
+FOREIGN KEY ("stage_id")
+  REFERENCES "stages" ("id")
+[0m
+  [1m[35m (3.0ms)[0m  CREATE TABLE "schema_migrations" ("version" character varying NOT NULL) 
+  [1m[36m (2.4ms)[0m  [1mCREATE UNIQUE INDEX  "unique_schema_migrations" ON "schema_migrations"  ("version")[0m
+  [1m[35m (0.4ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36m (0.7ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20220118040714')[0m
+  [1m[35m (0.6ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20220115211551')
+  [1m[36m (0.6ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20220118040235')[0m
+  [1m[35m (1.4ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20220115210212')
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mAdmin Exists (0.8ms)[0m  [1mSELECT  1 AS one FROM "admins" WHERE LOWER("admins"."email") = LOWER('test@test.com') LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "admins" ("first_name", "last_name", "email", "password_digest", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["first_name", "Elane"], ["last_name", "Swift"], ["email", "test@test.com"], ["password_digest", "$2a$12$pHaMbvJFv/y6GLmlIwcHqOY7UHPkYaJbMAhvllPC0uu.JnKRx3XW2"], ["created_at", "2022-01-29 21:19:18.590498"], ["updated_at", "2022-01-29 21:19:18.590498"]]
+  [1m[36m (0.6ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mAdmin Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "admins" WHERE LOWER("admins"."email") = LOWER('test@test.com') LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mAdmin Exists (0.3ms)[0m  SELECT  1 AS one FROM "admins" WHERE LOWER("admins"."email") = LOWER('test@test.com') LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mAdmin Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "admins" WHERE LOWER("admins"."email") = LOWER('test@test.com') LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mAdmin Exists (0.3ms)[0m  SELECT  1 AS one FROM "admins" WHERE LOWER("admins"."email") = LOWER('test@test.com') LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mAdmin Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "admins" WHERE LOWER("admins"."email") = LOWER('test@test.com') LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mAdmin Exists (0.3ms)[0m  SELECT  1 AS one FROM "admins" WHERE LOWER("admins"."email") = LOWER('test@test.com') LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mAdmin Exists (0.4ms)[0m  [1mSELECT  1 AS one FROM "admins" WHERE LOWER("admins"."email") = LOWER('test@test.com') LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mAdmin Exists (0.3ms)[0m  SELECT  1 AS one FROM "admins" WHERE LOWER("admins"."email") = LOWER('test@test.com') LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "stages" ("max_indoor_gathering", "max_outdoor_gathering", "food_establishments", "retail", "ceremony", "sports_recreational", "entertainment", "personal_care", "color_code", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING "id"[0m  [["max_indoor_gathering", 5], ["max_outdoor_gathering", 10], ["food_establishments", "Indoor dining is closed. Takeout & Outdoor dining: Maximum of 4 people per table exclusing\n  large households."], ["retail", "25% capacity of essential retail and 15% capacity of Non-essential retail both with no restricitons on\n  goods being sold"], ["ceremony", "Indoor religious services, rites, or ceremonies, including wedding services\n  and funeral services permitted at up to 15 per cent capacity of the particular room. Outdoor services max capacity\n  limited to the number of people that can maintain a physical distance of two metres."], ["sports_recreational", "Indoor sports and recreational fitness facilities are closed including gyms.Outdoor fitness classes,\n  outdoor groups in personal training and outdoor individual/team sport training to be permitted with up toMaximum:10 people"], ["entertainment", "Concert venues, theatres and cinemas may open outdoors for the purpose of rehearsing or performing\n  a recorded or broadcasted concert, artistic event, theatrical performance or other performance with no more than\n  10 performers"], ["personal_care", "Salons and Barbershops closed to the general public"], ["color_code", "red"], ["created_at", "2022-01-29 21:19:20.875426"], ["updated_at", "2022-01-29 21:19:20.875426"]]
+  [1m[35m (0.7ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "stages" ("max_indoor_gathering", "max_outdoor_gathering", "food_establishments", "retail", "ceremony", "sports_recreational", "entertainment", "personal_care", "color_code", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING "id"  [["max_indoor_gathering", 5], ["max_outdoor_gathering", 10], ["food_establishments", "Indoor dining is closed. Outdoor dining has some restrictions. "], ["retail", "50% capacity. For shopping malls physical distancing will be required in line-ups,\n  loitering will not be permitted and food courts will be required to close."], ["ceremony", "Indoor religious services, rites, or ceremonies, including wedding services\n  and funeral services limited to 50% capacity of the room."], ["sports_recreational", "Indoor sports and recreational fitness facilities are closed including gyms except\n  for except for professional athletes. Outdoor facilities limited by 50% occupancy."], ["entertainment", "Indoor concert venues, theatres, cinemas are closed. Rehearsals and recorded performances\n  permitted with restrictions."], ["personal_care", "50% capacity and other restrictions. Saunas, steam rooms,\n  and oxygen bars closed."], ["color_code", "orange"], ["created_at", "2022-01-29 21:19:20.879257"], ["updated_at", "2022-01-29 21:19:20.879257"]]
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "stages" ("max_indoor_gathering", "max_outdoor_gathering", "food_establishments", "retail", "ceremony", "sports_recreational", "entertainment", "personal_care", "color_code", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING "id"[0m  [["max_indoor_gathering", 25], ["max_outdoor_gathering", 100], ["food_establishments", "Indoor dining permitted with no limits to number of peopl per table. Indoor food or\n  drink establishments where dance facilities are provided, including nightclubs and\n  restobars, permitted up to 25 per cent capacity or up to a maximum limit of 250 people (whichever is less)"], ["retail", "Capacity limited to the number of people that can maintain a physical distance of two metres"], ["ceremony", "Indoor religious services, rites or ceremonies, including wedding services and\n  funeral services permitted with physical distancing;"], ["sports_recreational", "Maximum 50% capacity or 1000 people(whichever is less). Outdoor: 75% capacity or 15,000 people\n  whichever is less"], ["entertainment", "Concert, cinemas, and theatres can operate at  50 per cent capacity indoors or 1000 peopl which ever\n  is less or 75% Capacity outdoors or a maximum of 5,000 people for unseated events (whichever is less); 75% capacity\n  outdoors or a maximum of 15,000 people for events with fixed seating (whichever is less)"], ["personal_care", "Services that require removal of face coverings capacity is limited to the number of people that can\n  maintain a physical distance of two metres;"], ["color_code", "green"], ["created_at", "2022-01-29 21:19:20.882268"], ["updated_at", "2022-01-29 21:19:20.882268"]]
+  [1m[35m (0.7ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  INSERT INTO "health_regions" ("region_name", "region_code", "stage_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["region_name", "York Region Public Health"], ["region_code", "2270"], ["stage_id", 2], ["created_at", "2022-01-29 21:19:21.345183"], ["updated_at", "2022-01-29 21:19:21.345183"]]
+  [1m[36m (0.7ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "health_regions" ("region_name", "region_code", "stage_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["region_name", "Huron Perth Health Unit"], ["region_code", "5183"], ["stage_id", 2], ["created_at", "2022-01-29 21:19:21.349805"], ["updated_at", "2022-01-29 21:19:21.349805"]]
+  [1m[35m (0.8ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "health_regions" ("region_name", "region_code", "stage_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["region_name", "Region of Waterloo, Public Health"], ["region_code", "2265"], ["stage_id", 2], ["created_at", "2022-01-29 21:19:21.353679"], ["updated_at", "2022-01-29 21:19:21.353679"]]
+  [1m[36m (0.7ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "health_regions" ("region_name", "region_code", "stage_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["region_name", "Southwestern Public Health"], ["region_code", "4913"], ["stage_id", 3], ["created_at", "2022-01-29 21:19:21.357684"], ["updated_at", "2022-01-29 21:19:21.357684"]]
+  [1m[35m (0.6ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "health_regions" ("region_name", "region_code", "stage_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["region_name", "Hamilton Public Health Services"], ["region_code", "2237"], ["stage_id", 1], ["created_at", "2022-01-29 21:19:21.360596"], ["updated_at", "2022-01-29 21:19:21.360596"]]
+  [1m[36m (0.6ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "health_regions" ("region_name", "region_code", "stage_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["region_name", "Thunder Bay District Health Unit"], ["region_code", "2262"], ["stage_id", 2], ["created_at", "2022-01-29 21:19:21.363940"], ["updated_at", "2022-01-29 21:19:21.363940"]]
+  [1m[35m (0.6ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "health_regions" ("region_name", "region_code", "stage_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["region_name", "Peel Public Health"], ["region_code", "2253"], ["stage_id", 3], ["created_at", "2022-01-29 21:19:21.366823"], ["updated_at", "2022-01-29 21:19:21.366823"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "health_regions" ("region_name", "region_code", "stage_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["region_name", "Lambton Public Health"], ["region_code", "2242"], ["stage_id", 3], ["created_at", "2022-01-29 21:19:21.369306"], ["updated_at", "2022-01-29 21:19:21.369306"]]
+  [1m[35m (0.6ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "health_regions" ("region_name", "region_code", "stage_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["region_name", "Wellington-Dufferin-Guelph Health Unit"], ["region_code", "2266"], ["stage_id", 1], ["created_at", "2022-01-29 21:19:21.371762"], ["updated_at", "2022-01-29 21:19:21.371762"]]
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "health_regions" ("region_name", "region_code", "stage_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["region_name", "Brant County Health Unit"], ["region_code", "2227"], ["stage_id", 1], ["created_at", "2022-01-29 21:19:21.374489"], ["updated_at", "2022-01-29 21:19:21.374489"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "health_regions" ("region_name", "region_code", "stage_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["region_name", "Middlesex-London Health Unit"], ["region_code", "2244"], ["stage_id", 3], ["created_at", "2022-01-29 21:19:21.376765"], ["updated_at", "2022-01-29 21:19:21.376765"]]
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "health_regions" ("region_name", "region_code", "stage_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["region_name", "Sudbury and District Health Unit"], ["region_code", "2261"], ["stage_id", 1], ["created_at", "2022-01-29 21:19:21.379135"], ["updated_at", "2022-01-29 21:19:21.379135"]]
+  [1m[35m (0.6ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "health_regions" ("region_name", "region_code", "stage_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["region_name", "Haliburton, Kawartha, Pine Ridge District Health Unit"], ["region_code", "2235"], ["stage_id", 2], ["created_at", "2022-01-29 21:19:21.381971"], ["updated_at", "2022-01-29 21:19:21.381971"]]
+  [1m[36m (0.6ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "health_regions" ("region_name", "region_code", "stage_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["region_name", "Niagara Region Public Health Department"], ["region_code", "2246"], ["stage_id", 1], ["created_at", "2022-01-29 21:19:21.385358"], ["updated_at", "2022-01-29 21:19:21.385358"]]
+  [1m[35m (0.6ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "health_regions" ("region_name", "region_code", "stage_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["region_name", "Chatham-Kent Health Unit"], ["region_code", "2240"], ["stage_id", 3], ["created_at", "2022-01-29 21:19:21.388510"], ["updated_at", "2022-01-29 21:19:21.388510"]]
+  [1m[36m (0.6ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "health_regions" ("region_name", "region_code", "stage_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["region_name", "Kingston, Frontenac and Lennox and Addington Health Unit"], ["region_code", "2241"], ["stage_id", 1], ["created_at", "2022-01-29 21:19:21.392001"], ["updated_at", "2022-01-29 21:19:21.392001"]]
+  [1m[35m (0.7ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "health_regions" ("region_name", "region_code", "stage_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["region_name", "Windsor-Essex County Health Unit"], ["region_code", "2268"], ["stage_id", 3], ["created_at", "2022-01-29 21:19:21.395377"], ["updated_at", "2022-01-29 21:19:21.395377"]]
+  [1m[36m (0.6ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "health_regions" ("region_name", "region_code", "stage_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["region_name", "Peterborough Public Health"], ["region_code", "2255"], ["stage_id", 1], ["created_at", "2022-01-29 21:19:21.398252"], ["updated_at", "2022-01-29 21:19:21.398252"]]
+  [1m[35m (0.6ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "health_regions" ("region_name", "region_code", "stage_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["region_name", "Grey Bruce Health Unit"], ["region_code", "2233"], ["stage_id", 2], ["created_at", "2022-01-29 21:19:21.401680"], ["updated_at", "2022-01-29 21:19:21.401680"]]
+  [1m[36m (0.7ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "health_regions" ("region_name", "region_code", "stage_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["region_name", "Eastern Ontario Health Unit"], ["region_code", "2258"], ["stage_id", 1], ["created_at", "2022-01-29 21:19:21.405545"], ["updated_at", "2022-01-29 21:19:21.405545"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "health_regions" ("region_name", "region_code", "stage_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["region_name", "North Bay Parry Sound District Health Unit"], ["region_code", "2247"], ["stage_id", 1], ["created_at", "2022-01-29 21:19:21.408474"], ["updated_at", "2022-01-29 21:19:21.408474"]]
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "health_regions" ("region_name", "region_code", "stage_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["region_name", "Ottawa Public Health"], ["region_code", "2251"], ["stage_id", 3], ["created_at", "2022-01-29 21:19:21.411086"], ["updated_at", "2022-01-29 21:19:21.411086"]]
+  [1m[35m (0.6ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "health_regions" ("region_name", "region_code", "stage_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["region_name", "Leeds, Grenville and Lanark District Health Unit"], ["region_code", "2243"], ["stage_id", 3], ["created_at", "2022-01-29 21:19:21.414700"], ["updated_at", "2022-01-29 21:19:21.414700"]]
+  [1m[36m (0.7ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "health_regions" ("region_name", "region_code", "stage_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["region_name", "Northwestern Health Unit"], ["region_code", "2249"], ["stage_id", 1], ["created_at", "2022-01-29 21:19:21.418993"], ["updated_at", "2022-01-29 21:19:21.418993"]]
+  [1m[35m (0.5ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "health_regions" ("region_name", "region_code", "stage_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["region_name", "Haldimand-Norfolk Health Unit"], ["region_code", "2234"], ["stage_id", 3], ["created_at", "2022-01-29 21:19:21.421799"], ["updated_at", "2022-01-29 21:19:21.421799"]]
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "health_regions" ("region_name", "region_code", "stage_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["region_name", "Timiskaming Health Unit"], ["region_code", "2263"], ["stage_id", 1], ["created_at", "2022-01-29 21:19:21.424561"], ["updated_at", "2022-01-29 21:19:21.424561"]]
+  [1m[35m (0.5ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "health_regions" ("region_name", "region_code", "stage_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["region_name", "Renfrew County and District Health Unit"], ["region_code", "2257"], ["stage_id", 3], ["created_at", "2022-01-29 21:19:21.427208"], ["updated_at", "2022-01-29 21:19:21.427208"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "health_regions" ("region_name", "region_code", "stage_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["region_name", "Toronto Public Health"], ["region_code", "3895"], ["stage_id", 2], ["created_at", "2022-01-29 21:19:21.429600"], ["updated_at", "2022-01-29 21:19:21.429600"]]
+  [1m[35m (0.6ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "health_regions" ("region_name", "region_code", "stage_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["region_name", "Halton Region Health Department"], ["region_code", "2236"], ["stage_id", 3], ["created_at", "2022-01-29 21:19:21.433217"], ["updated_at", "2022-01-29 21:19:21.433217"]]
+  [1m[36m (0.6ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "health_regions" ("region_name", "region_code", "stage_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["region_name", "Hastings and Prince Edward Counties Health Unit"], ["region_code", "2238"], ["stage_id", 3], ["created_at", "2022-01-29 21:19:21.436297"], ["updated_at", "2022-01-29 21:19:21.436297"]]
+  [1m[35m (0.7ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "health_regions" ("region_name", "region_code", "stage_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["region_name", "Simcoe Muskoka District Health Unit"], ["region_code", "2260"], ["stage_id", 2], ["created_at", "2022-01-29 21:19:21.440046"], ["updated_at", "2022-01-29 21:19:21.440046"]]
+  [1m[36m (0.7ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "health_regions" ("region_name", "region_code", "stage_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["region_name", "Durham Region Health Department"], ["region_code", "2230"], ["stage_id", 3], ["created_at", "2022-01-29 21:19:21.443480"], ["updated_at", "2022-01-29 21:19:21.443480"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "health_regions" ("region_name", "region_code", "stage_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["region_name", "Porcupine Health Unit"], ["region_code", "2256"], ["stage_id", 3], ["created_at", "2022-01-29 21:19:21.445905"], ["updated_at", "2022-01-29 21:19:21.445905"]]
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "health_regions" ("region_name", "region_code", "stage_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["region_name", "Algoma Public Health Unit"], ["region_code", "2226"], ["stage_id", 3], ["created_at", "2022-01-29 21:19:21.448324"], ["updated_at", "2022-01-29 21:19:21.448324"]]
+  [1m[35m (0.4ms)[0m  COMMIT
