@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'rake'
 gem 'bigdecimal', '1.3.5'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.6'
+gem 'rails', '4.2.11'
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3', '~> 1.3.13'
 # Use SCSS for stylesheets
