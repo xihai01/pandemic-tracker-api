@@ -4,12 +4,12 @@ jobs:
   build:
     working_directory: ~/pandemic-tracker-api
     docker:
-      - image: circleci/ruby:2.4.1 # primary container - where job steps are run
+      - image: cimg/ruby:2.4-node # primary container - where job steps are run
         environment:
           PGHOST: localhost
           PGUSER: development
           RAILS_ENV: test
-      - image: postgres:9.5 # services container
+      - image: cimg/postgres:9.6 # services container
         environment:
           POSTGRES_USER: development
           POSTGRES_DB: pandemic_test
