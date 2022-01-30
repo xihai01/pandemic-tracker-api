@@ -21,6 +21,12 @@ jobs:
       - type: cache-restore
         name: Restore bundle cache
         key: pandemic-tracker-api-{{ checksum "Gemfile.lock" }}
+        
+      # install bundler 1.17.3
+      - run:
+          name: install dependencies
+          command: |
+            gem install bundler -v 1.17.3
 
       # Bundle install dependencies
       - run: bundle install --path vendor/bundle
