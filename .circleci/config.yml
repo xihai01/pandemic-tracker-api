@@ -1,0 +1,48 @@
+version: 2.0
+
+jobs:
+  build:
+    working_directory: ~/pandemic-tracker-api
+    docker:
+      - image: circleci/ruby:2.4.1 # primary container - where job steps are run
+        environment:
+          PGHOST: localhost
+          PGUSER: development
+          RAILS_ENV: test
+      - image: postgres:9.5 # services container
+        environment:
+          POSTGRES_USER: development
+          POSTGRES_DB: pandemic_test
+          POSTGRES_PASSWORD: development
+    steps:
+      - checkout
+
+      # Restore Cached Dependencies
+      - type: cache-restore
+        name: Restore bundle cache
+        key: pandemic-tracker-api-{{ checksum "Gemfile.lock" }}
+
+      # Bundle install dependencies
+      - run: bundle install --path misc/bundle
+
+      # Cache Dependencies
+      - type: cache-save
+        name: Store bundle cache
+        key: pandemic-tracker-api-{{ checksum "Gemfile.lock" }}
+        paths:
+          - misc/bundle
+
+      # Wait for DB
+      - run: dockerize -wait tcp://localhost:5432 -timeout 1m
+      # Database setup
+      - run: bundle exec rake db:setup
+
+      - run:
+          name: Run tests
+          command: bundle exec rake
+
+workflows:
+  version: 2
+  build-and-test:
+    jobs:
+      - build
