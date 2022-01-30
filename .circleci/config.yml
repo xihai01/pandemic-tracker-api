@@ -4,7 +4,7 @@ jobs:
   build:
     working_directory: ~/pandemic-tracker-api
     docker:
-      - image: cimg/ruby:2.4-node # primary container - where job steps are run
+      - image: cimg/ruby:2.6-node # primary container - where job steps are run
         environment:
           PGHOST: localhost
           PGUSER: development
@@ -21,7 +21,7 @@ jobs:
       - type: cache-restore
         name: Restore bundle cache
         key: pandemic-tracker-api-{{ checksum "Gemfile.lock" }}
-        
+
       # install bundler 1.17.3
       - run:
           name: install dependencies
