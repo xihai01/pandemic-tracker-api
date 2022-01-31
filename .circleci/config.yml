@@ -4,7 +4,7 @@ jobs:
   build:
     working_directory: ~/pandemic-tracker-api
     docker:
-      - image: cimg/ruby:2.6-node # primary container - where job steps are run
+      - image: cimg/ruby:2.5-node # primary container - where job steps are run
         environment:
           PGHOST: localhost
           PGUSER: development
