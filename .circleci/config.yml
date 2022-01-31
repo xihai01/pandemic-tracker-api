@@ -46,7 +46,6 @@ jobs:
       - run:
           name: Run tests
           command: |
-            rake db:migrate:reset
             bundle exec rspec
 
 workflows:
