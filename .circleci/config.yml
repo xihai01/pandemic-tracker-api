@@ -4,7 +4,7 @@ jobs:
   build:
     working_directory: ~/pandemic-tracker-api
     docker:
-      - image: cimg/ruby:2.4-node # primary container - where job steps are run
+      - image: cimg/ruby:2.5-node # primary container - where job steps are run
         environment:
           PGHOST: localhost
           PGUSER: development
@@ -22,24 +22,31 @@ jobs:
         name: Restore bundle cache
         key: pandemic-tracker-api-{{ checksum "Gemfile.lock" }}
 
+      # install bundler 1.17.3
+      - run:
+          name: install dependencies
+          command: |
+            gem install bundler -v 1.17.3
+
       # Bundle install dependencies
-      - run: bundle install --path misc/bundle
+      - run: bundle install --path vendor/bundle
 
       # Cache Dependencies
       - type: cache-save
         name: Store bundle cache
         key: pandemic-tracker-api-{{ checksum "Gemfile.lock" }}
         paths:
-          - misc/bundle
+          - vendor/bundle
 
       # Wait for DB
       - run: dockerize -wait tcp://localhost:5432 -timeout 1m
       # Database setup
-      - run: bundle exec rake db:setup
+      - run: bundle exec rake db:migrate
 
       - run:
           name: Run tests
-          command: bundle exec rake
+          command: |
+            bundle exec rspec
 
 workflows:
   version: 2
