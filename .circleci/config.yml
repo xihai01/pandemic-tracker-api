@@ -41,7 +41,11 @@ jobs:
       # Wait for DB
       - run: dockerize -wait tcp://localhost:5432 -timeout 1m
       # Database setup
-      - run: bundle exec rake db:setup
+      - run:
+        name: Setup migrations
+        command: |
+          bundle exec rake db:create
+          bundle exec rake db:schema:load
 
       - run:
           name: Run tests
