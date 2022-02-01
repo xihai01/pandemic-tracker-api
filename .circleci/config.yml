@@ -61,7 +61,7 @@ jobs:
       - run:
           name: Push Master to Production
           command: |
-            git push https://github.com/xihai01/pandemic-tracker-api.git master:production
+            git push https://github.com/xihai01/pandemic-tracker-api.git main:production
 
 workflows:
   version: 2
@@ -77,4 +77,3 @@ workflows:
               ignore: production
           requires:
             - build
-            
