@@ -47,9 +47,34 @@ jobs:
           name: Run tests
           command: |
             bundle exec rspec
+  deploy:
+    machine:
+      enabled: true
+
+    working_directory: ~/pandemic-tracker-api
+
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "c1:d1:19:bb:4c:d0:7b:b3:01:6f:4f:b3:2b:b4:45:55"
+      - checkout
+      - run:
+          name: Push Master to Production
+          command: |
+            git push https://github.com/xihai01/pandemic-tracker-api.git master:production
 
 workflows:
   version: 2
-  build-and-test:
+  build-and-test-and-deploy:
     jobs:
-      - build
+      - build:
+          filters:
+            branches:
+              ignore: production
+      - deploy:
+          filters:
+            branches:
+              ignore: production
+          requires:
+            - build
+            
